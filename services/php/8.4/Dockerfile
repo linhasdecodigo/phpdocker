@@ -13,11 +13,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
-RUN apt-get update && apt-get install -y libmariadb-dev mysql-client \
+RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_mysql
 
-RUN apt-get update && apt-get install -y libmariadb-dev mysql-client \
+RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install mysqli
 
