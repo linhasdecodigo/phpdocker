@@ -9,51 +9,64 @@ RUN apt-get update && apt-get install -y \
     curl \
     zip \
     unzip \
-    nano
+    nano \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
-RUN apt-get update && apt-get install -y libmariadb-dev
+RUN apt-get update && apt-get install -y libmariadb-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_mysql
 
-RUN apt-get update && apt-get install -y libmariadb-dev
+RUN apt-get update && apt-get install -y libmariadb-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install mysqli
 
-RUN apt-get update && apt-get install -y libsqlite3-dev
+RUN apt-get update && apt-get install -y libsqlite3-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_sqlite
 
 RUN docker-php-ext-install bcmath
 
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev
+RUN apt-get update && apt-get install -y libcurl4-openssl-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install curl
 
-RUN apt-get update && apt-get install -y libzip-dev
+RUN apt-get update && apt-get install -y libzip-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install zip
 
-RUN apt-get update && apt-get install -y libicu-dev
+RUN apt-get update && apt-get install -y libicu-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install -j$(nproc) intl
 
-RUN apt-get update && apt-get install -y libonig-dev
+RUN apt-get update && apt-get install -y libonig-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install mbstring
 
 RUN docker-php-ext-install gettext
 
 RUN docker-php-ext-install calendar
 
-RUN apt-get update && apt-get install -y libexif-dev
+RUN apt-get update && apt-get install -y libexif-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install exif
 
-RUN apt-get update && apt-get install -y libxml2-dev
+RUN apt-get update && apt-get install -y libxml2-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install soap
 
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libwebp-dev
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libwebp-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install -j$(nproc) gd
 
 RUN docker-php-ext-install ctype
 
-RUN apt-get update && apt-get install -y libxml2-dev
+RUN apt-get update && apt-get install -y libxml2-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install xml
 
-RUN apt-get update && apt-get install -y libgmp-dev
+RUN apt-get update && apt-get install -y libgmp-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install gmp
 
 RUN docker-php-ext-install iconv
@@ -62,22 +75,30 @@ RUN docker-php-ext-install opcache
 
 RUN apt-get update && apt-get install -y libzip-dev \
     && pecl channel-update pecl.php.net \
-    && pecl install redis
+    && pecl install redis \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable redis
 
 RUN docker-php-ext-install pcntl
 
 RUN docker-php-ext-install posix
 
-RUN apt-get update && apt-get install -y libldap2-dev
+RUN apt-get update && apt-get install -y libldap2-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install ldap
 
-RUN apt-get update && apt-get install -y libsodium-dev
+RUN apt-get update && apt-get install -y libsodium-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install sodium
 
-RUN apt-get update && apt-get install -y libpq-dev
+RUN apt-get update && apt-get install -y libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_pgsql
 
 RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev \
-    && pecl install imap
+    && pecl install imap \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable imap
+
+# Instalar o composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
