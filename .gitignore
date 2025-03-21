@@ -2,15 +2,11 @@
 .env
 
 # Ignorar todo o conteúdo das pastas
+app/*
 data/db/*
 data/cache/*
 
 # Manter as pastas vazias
+!app/.gitkeep
 !data/db/.gitkeep
 !data/cache/.gitkeep
-
-# Ignorar todo o conteúdo da pasta app
-app/*
-
-# Especificamente não ignorar a pasta phpdocker dentro de app
-!app/phpdocker
