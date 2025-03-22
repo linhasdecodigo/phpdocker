@@ -7,5 +7,8 @@ config/*
 data/db/*
 data/cache/*
 
-# Não ignorar os arquivos
-!config/nginx.conf
+# Não ignorar os arquivos .gitkeep
+!app/.gitkeep
+!config/.gitkeep
+!data/db/.gitkeep
+!data/cache/.gitkeep
