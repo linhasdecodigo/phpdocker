@@ -4,11 +4,13 @@
 # Ignorar todo o conteúdo das pastas
 app/*
 config/*
+data/*
 data/db/*
 data/cache/*
 
 # Não ignorar os arquivos .gitkeep
 !app/.gitkeep
 !config/.gitkeep
+!data/.gitkeep
 !data/db/.gitkeep
 !data/cache/.gitkeep
