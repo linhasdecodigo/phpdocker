@@ -3,10 +3,9 @@
 
 # Ignorar todo o conteúdo das pastas
 app/*
+config/*
 data/db/*
 data/cache/*
 
-# Manter as pastas vazias
-!app/.gitkeep
-!data/db/.gitkeep
-!data/cache/.gitkeep
+# Não ignorar os arquivos
+!config/nginx.conf

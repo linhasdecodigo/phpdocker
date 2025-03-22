@@ -1,7 +1,11 @@
 FROM php:8.4-fpm-bookworm
 
 # Definir diretório de trabalho
-WORKDIR /var/www/html
+WORKDIR /var/www
+
+# Apagar o diretório /var/www/html da imagem para evitar conflito com o volume
+# montado na pasta /var/www, onde a aplicação será mapeada
+RUN rm -rf /var/www/html
 
 # Instalar utilitários essenciais
 RUN apt-get update && apt-get install -y \
