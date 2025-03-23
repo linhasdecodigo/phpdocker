@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-bookworm
+FROM php:8.4-fpm-bookworm
 
 # Definir diretório de trabalho
 WORKDIR /var/www
@@ -13,7 +13,7 @@ RUN ln -s "/usr/local/etc/php/php.ini-production" "/usr/local/etc/php/php.ini"
 COPY php.ini /usr/local/etc/php/conf.d/dockerlemp.ini
 
 # Instalar utilitários essenciais
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing \
     git \
     curl \
     zip \
@@ -24,39 +24,48 @@ RUN apt-get update && apt-get install -y \
 # Instalar o composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN apt-get update && apt-get install -y libmagickwand-dev \
-    && pecl channel-update pecl.php.net \
-    && pecl install imagick \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --fix-missing libmagickwand-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && cd /usr/local/src \
+    && git clone https://github.com/Imagick/imagick.git \
+    && cd imagick \
+    && phpize \
+    && ./configure \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf imagick \
+    && docker-php-ext-enable imagick \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-RUN docker-php-ext-enable imagick
 
-RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libmariadb-dev mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_mysql
 
-RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libmariadb-dev mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install mysqli
 
-RUN apt-get update && apt-get install -y libsqlite3-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libsqlite3-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_sqlite
 
 RUN docker-php-ext-install bcmath
 
-RUN apt-get update && apt-get install -y libcurl4-openssl-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libcurl4-openssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install curl
 
-RUN apt-get update && apt-get install -y libzip-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libzip-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install zip
 
-RUN apt-get update && apt-get install -y libicu-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libicu-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install -j$(nproc) intl
 
-RUN apt-get update && apt-get install -y libonig-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libonig-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install mbstring
 
@@ -64,25 +73,25 @@ RUN docker-php-ext-install gettext
 
 RUN docker-php-ext-install calendar
 
-RUN apt-get update && apt-get install -y libexif-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libexif-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install exif
 
-RUN apt-get update && apt-get install -y libxml2-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libxml2-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install soap
 
-RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libwebp-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libpng-dev libjpeg-dev libwebp-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install -j$(nproc) gd
 
 RUN docker-php-ext-install ctype
 
-RUN apt-get update && apt-get install -y libxml2-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libxml2-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install xml
 
-RUN apt-get update && apt-get install -y libgmp-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libgmp-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install gmp
 
@@ -90,7 +99,7 @@ RUN docker-php-ext-install iconv
 
 RUN docker-php-ext-install opcache
 
-RUN apt-get update && apt-get install -y libzip-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libzip-dev \
     && pecl channel-update pecl.php.net \
     && pecl install redis \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -100,19 +109,19 @@ RUN docker-php-ext-install pcntl
 
 RUN docker-php-ext-install posix
 
-RUN apt-get update && apt-get install -y libldap2-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libldap2-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install ldap
 
-RUN apt-get update && apt-get install -y libsodium-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libsodium-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install sodium
 
-RUN apt-get update && apt-get install -y libpq-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libpq-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-install pdo_pgsql
 
-RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing libc-client-dev libkrb5-dev \
     && pecl install imap \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable imap
