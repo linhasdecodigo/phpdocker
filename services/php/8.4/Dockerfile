@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-bookworm
+FROM php:8.4-fpm-bookworm
 
 # Definir diretório de trabalho
 WORKDIR /var/www
@@ -16,6 +16,7 @@ COPY php.ini /usr/local/etc/php/conf.d/dockerlemp.ini
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    wget \
     zip \
     unzip \
     nano \
