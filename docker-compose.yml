@@ -29,7 +29,7 @@ services:
     volumes:
       - ${APP_PATH}:/var/www
       - ${STORAGE_PATH}:/mnt/storage
-      - ${NGINX_CUSTOM_CONFIG}:/tmp/custom.conf
+      - ${NGINX_CUSTOM_CONFIG}:/tmp/app-custom.conf
     environment:
       PUBLIC_PATH: ${NGINX_PUBLIC_PATH}
     depends_on:

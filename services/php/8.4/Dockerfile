@@ -7,6 +7,11 @@ WORKDIR /var/www
 # montado na pasta /var/www, onde a aplicação será mapeada
 RUN rm -rf /var/www/html
 
+# Configure PHP
+RUN ln -s "/usr/local/etc/php/php.ini-production" "/usr/local/etc/php/php.ini"
+
+COPY php.ini /usr/local/etc/php/conf.d/dockerlemp.ini
+
 # Instalar utilitários essenciais
 RUN apt-get update && apt-get install -y \
     git \
