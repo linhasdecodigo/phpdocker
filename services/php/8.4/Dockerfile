@@ -24,9 +24,9 @@ RUN apt-get update && apt-get install -y \
 # Instalar o composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN apt-get update && apt-get install -y libzip-dev libmagickwand-dev \
+RUN apt-get update && apt-get install -y libmagickwand-dev \
     && pecl channel-update pecl.php.net \
-    && pecl install imagick-3.6.0 \
+    && pecl install imagick \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable imagick
 
