@@ -20,8 +20,6 @@ services:
     build:
       context: ./services/nginx/${NGINX_VERSION}
       dockerfile: Dockerfile
-      args:
-        - CUSTOM_CONFIG_ENABLED=${NGINX_CUSTOM_CONFIG_ENABLED}
     image: ${PROJECT_NAME}-nginx:${NGINX_VERSION}
     container_name: ${PROJECT_NAME}-nginx-${NGINX_VERSION}
     ports:
@@ -31,7 +29,8 @@ services:
       - ${STORAGE_PATH}:/mnt/storage
       - ${NGINX_CUSTOM_CONFIG}:/tmp/app-custom.conf
     environment:
-      PUBLIC_PATH: ${NGINX_PUBLIC_PATH}
+      NGINX_PUBLIC_PATH: ${NGINX_PUBLIC_PATH}
+      NGINX_CUSTOM_CONFIG_ENABLED: ${NGINX_CUSTOM_CONFIG_ENABLED}
     depends_on:
       - php
     networks:
