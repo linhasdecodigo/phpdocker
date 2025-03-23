@@ -21,6 +21,15 @@ RUN apt-get update && apt-get install -y \
     nano \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Instalar o composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN apt-get update && apt-get install -y libmagickwand-dev \
+    && pecl channel-update pecl.php.net \
+    && pecl install imagick \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN docker-php-ext-enable imagick
+
 
 RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -108,6 +117,3 @@ RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev \
     && pecl install imap \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable imap
-
-# Instalar o composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
