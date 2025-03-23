@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:1.27-bookworm
 
 # Instalar o pacote gettext, necessário para usar o comando envsubst,
 # que permite substituir variáveis nos arquivos de configuração
