@@ -15,5 +15,6 @@ else
     fi
 fi
 
-# Iniciar o Nginx em primeiro plano, mantendo o container em execução
+
+# COMANDO DE INICIALIZAÇÃO OBTIDO NA IMAGEM ORIGINAL
 exec nginx -g "daemon off;"

@@ -12,8 +12,12 @@ RUN rm -rf /var/www/html
 COPY nginx.conf /tmp/nginx.conf
 
 # Copiar o script de entrada para dentro do container e garantir que ele tenha permissão de execução
-COPY entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Definir o script de entrada a ser executado quando o container iniciar
-ENTRYPOINT ["/docker-entrypoint.sh"]
+# DAQUI EM DIANTE FOI PEGO NA IMAGEM ORIGINAL
+# Sobrescreve o ENTRYPOINT para rodar o script original primeiro, e depois o meu script
+ENTRYPOINT ["/bin/bash", "-c", "/docker-entrypoint.sh && /entrypoint.sh"]
+
+# Incluído no entrypoint.sh
+# CMD ["nginx" "-g" "daemon off;"]

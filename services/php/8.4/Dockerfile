@@ -126,3 +126,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends --fix-missing l
     && pecl install imap \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable imap
+
+# Copiar o script de entrada para dentro do container e garantir que ele tenha permissão de execução
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# DAQUI EM DIANTE FOI PEGO NA IMAGEM ORIGINAL
+# Sobrescreve o ENTRYPOINT para rodar o script original primeiro, e depois o meu script
+ENTRYPOINT ["/bin/bash", "-c", "/usr/local/bin/docker-php-entrypoint && /entrypoint.sh"]
+
+# Incluído no entrypoint.sh
+# CMD ["php-fpm"]
