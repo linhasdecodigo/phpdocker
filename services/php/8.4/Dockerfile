@@ -24,12 +24,11 @@ RUN apt-get update && apt-get install -y \
 # Instalar o composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN apt-get update && apt-get install -y libmagickwand-dev \
+RUN apt-get update && apt-get install -y libzip-dev libmagickwand-dev \
     && pecl channel-update pecl.php.net \
-    && pecl install imagick \
+    && pecl install imagick-3.6.0 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN docker-php-ext-enable imagick
-
 
 RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
