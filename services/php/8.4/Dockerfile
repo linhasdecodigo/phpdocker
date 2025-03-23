@@ -30,8 +30,9 @@ RUN apt-get update && apt-get install -y \
     libmagickcore-dev \
     imagemagick \
     pkg-config \
+    build-essential \
     && pecl install imagick \
-    && docker-php-ext-enable imagick \
+    && docker-php-ext-enable imagick \ 
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update && apt-get install -y libmariadb-dev mariadb-client \
